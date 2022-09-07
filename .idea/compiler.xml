@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="traffic-api-exception" />
+        <module name="traffic-delivery" />
+        <module name="traffic-logger" />
+        <module name="traffic-api-interface" />
+        <module name="traffic-transport" />
+        <module name="traffic-mq" />
+        <module name="traffic-finance" />
+        <module name="traffic-web" />
+        <module name="traffic-cache" />
+        <module name="traffic-api-resultCode" />
+        <module name="traffic-api-entity" />
+        <module name="traffic-declare" />
+        <module name="traffic-carry" />
+        <module name="traffic-api-commonts" />
+        <module name="traffic-pack" />
+        <module name="traffic-induce" />
+        <module name="traffic-search" />
+        <module name="traffic-system" />
+        <module name="traffic-storage" />
+        <module name="traffic-customer" />
+        <module name="traffic-utils" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="traffic-api" options="-parameters" />
+      <module name="traffic-api-commonts" options="-parameters" />
+      <module name="traffic-api-entity" options="-parameters" />
+      <module name="traffic-api-exception" options="-parameters" />
+      <module name="traffic-api-interface" options="-parameters" />
+      <module name="traffic-api-resultCode" options="-parameters" />
+      <module name="traffic-cache" options="-parameters" />
+      <module name="traffic-carry" options="-parameters" />
+      <module name="traffic-customer" options="-parameters" />
+      <module name="traffic-declare" options="-parameters" />
+      <module name="traffic-delivery" options="-parameters" />
+      <module name="traffic-dependencies" options="-parameters" />
+      <module name="traffic-finance" options="-parameters" />
+      <module name="traffic-induce" options="-parameters" />
+      <module name="traffic-logger" options="-parameters" />
+      <module name="traffic-mq" options="-parameters" />
+      <module name="traffic-pack" options="-parameters" />
+      <module name="traffic-search" options="-parameters" />
+      <module name="traffic-storage" options="-parameters" />
+      <module name="traffic-system" options="-parameters" />
+      <module name="traffic-transport" options="-parameters" />
+      <module name="traffic-utils" options="-parameters" />
+      <module name="traffic-web" options="-parameters" />
+    </option>
+  </component>
+</project>
