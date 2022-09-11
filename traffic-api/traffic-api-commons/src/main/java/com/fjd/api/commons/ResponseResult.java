@@ -14,6 +14,11 @@ public class ResponseResult<T> {
         this.resultMsg = resultMsg;
         this.result = result;
     }
+
+    public ResponseResult(String resultCode, T t) {
+        this.resultCode = resultCode;
+        this.result = t;
+    }
     public ResponseResult(String resultCode, String resultMsg) {
         this.resultCode = resultCode;
         this.resultMsg = resultMsg;

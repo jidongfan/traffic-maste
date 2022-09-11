@@ -1,6 +1,7 @@
 package com.fjd.system.info;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 这里的entity是和前端页面交互的，info是和数据交互
@@ -26,6 +27,9 @@ public class UserInfo {
     private String udesc;
     @Column(name = "u1")
     private String u1;
+
+    @Column(name = "utime")
+    private Date utime;
 
     //用于标注该条数据是否被删除
     @Column(name = "ustatus")
@@ -109,6 +113,14 @@ public class UserInfo {
 
     public void setUstatus(int ustatus) {
         this.ustatus = ustatus;
+    }
+
+    public Date getUtime() {
+        return utime;
+    }
+
+    public void setUtime(Date utime) {
+        this.utime = utime;
     }
 
     @Override

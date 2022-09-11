@@ -7,6 +7,10 @@ import com.fjd.system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 public interface UserService {
 
     /**
@@ -29,4 +33,33 @@ public interface UserService {
      * @return true:修改成功
      */
     public boolean updUser(UserEntity userEntity);
+
+    /**
+     * 查询所有用户
+     * @return 用户列表
+     */
+    public List<UserEntity> findAllUser();
+
+    /**
+     * 条件查询
+     * @param userEntity
+     * @return 用户列表
+     */
+    public List<UserEntity> findAllUserByWhere(UserEntity userEntity);
+
+    /**
+     * 根据时间条件查询
+     * @param t1
+     * @param t2
+     * @return
+     */
+    public List<UserEntity> findUsersByTime(String t1, String t2);
+
+    /**
+     * 分页查询
+     * 条件查询
+     * @param userEntity
+     * @return
+     */
+    public Map<String, Object> queryUsers(UserEntity userEntity);
 }

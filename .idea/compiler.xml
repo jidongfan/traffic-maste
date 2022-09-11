@@ -13,6 +13,7 @@
         <module name="traffic-transport" />
         <module name="traffic-mq" />
         <module name="traffic-finance" />
+        <module name="traffic-api-comments" />
         <module name="traffic-web" />
         <module name="traffic-cache" />
         <module name="traffic-api-resultCode" />
@@ -32,7 +33,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="traffic-api" options="-parameters" />
+      <module name="traffic-api" options="" />
+      <module name="traffic-api-comments" options="-parameters" />
       <module name="traffic-api-commonts" options="-parameters" />
       <module name="traffic-api-entity" options="-parameters" />
       <module name="traffic-api-exception" options="-parameters" />
@@ -43,7 +45,7 @@
       <module name="traffic-customer" options="-parameters" />
       <module name="traffic-declare" options="-parameters" />
       <module name="traffic-delivery" options="-parameters" />
-      <module name="traffic-dependencies" options="-parameters" />
+      <module name="traffic-dependencies" options="" />
       <module name="traffic-finance" options="-parameters" />
       <module name="traffic-induce" options="-parameters" />
       <module name="traffic-logger" options="-parameters" />

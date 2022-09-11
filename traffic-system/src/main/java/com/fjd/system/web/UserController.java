@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.ws.Response;
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/user")
@@ -184,6 +188,68 @@ public class UserController {
 
         logger.info("system user updUser end");
         return returnResponseResult(result, SystemCode.SYSTEM_USER_ERROR_UPD_FAIL);
+    }
+
+    /**
+     * 查询所有的用户信息
+     * @return
+     */
+    @RequestMapping(value = "/allUser")
+    public ResponseResult<List<UserEntity>> findAllUser(){
+
+        logger.info("system user allUser start");
+
+        logger.info("system user allUser service start :");
+        List<UserEntity> allUser = userService.findAllUser();
+        logger.info("system user allUser service end :" + allUser);
+        ResponseResult<List<UserEntity>> responseResult = ResponseResultFactory.buildResponseResult(SystemCode.TRAFFIC_SYSTEM_SUCCESS, allUser);
+
+        logger.info("system user allUser end");
+        return responseResult;
+    }
+
+    /**
+     * 根据条件查询数据
+     * @param userEntity
+     * @return 查询列表
+     */
+    @RequestMapping("/findUsers")
+    public ResponseResult<List<UserEntity>> findUserByWhere(UserEntity userEntity){
+
+        List<UserEntity> users = userService.findAllUserByWhere(userEntity);
+        ResponseResult<List<UserEntity>> responseResult = ResponseResultFactory.buildResponseResult(SystemCode.TRAFFIC_SYSTEM_SUCCESS, users);
+
+        return responseResult;
+    }
+
+    /**
+     * 通用的分页查询
+     * 排序，分页，条件查询
+     * @param userEntity
+     * @return
+     */
+    @RequestMapping("/queryUsers")
+    public ResponseResult queryUsers(UserEntity userEntity){
+
+        //分页查询 + 条件查询
+        Map<String, Object> map = userService.queryUsers(userEntity);
+        ResponseResult responseResult = ResponseResultFactory.buildResponseResult(SystemCode.TRAFFIC_SYSTEM_SUCCESS, map);
+
+        return responseResult;
+    }
+
+    /**
+     * 根据条件查询数据
+     * @param userEntity
+     * @return 查询列表
+     */
+    @RequestMapping("/findUserByTime")
+    public ResponseResult<List<UserEntity>> findUserByTime(UserEntity userEntity){
+
+        List<UserEntity> users = userService.findUsersByTime(userEntity.getStartTime(), userEntity.getEndTime());
+        ResponseResult<List<UserEntity>> responseResult = ResponseResultFactory.buildResponseResult(SystemCode.TRAFFIC_SYSTEM_SUCCESS, users);
+
+        return responseResult;
     }
 
 
