@@ -1,6 +1,7 @@
 package com.fjd.system.info;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "t_role")
@@ -14,6 +15,9 @@ public class RoleInfo {
   private int rtype;
   @Column(name = "rdesc")
   private String rdesc;
+
+  @ManyToMany(mappedBy = "roles")  //指定跟roles关联起来，配置一边就可以了
+  private List<UserInfo> users;
 
   public long getRid() {
     return rid;
@@ -47,4 +51,11 @@ public class RoleInfo {
     this.rdesc = rdesc;
   }
 
+  public List<UserInfo> getUsers() {
+    return users;
+  }
+
+  public void setUsers(List<UserInfo> users) {
+    this.users = users;
+  }
 }

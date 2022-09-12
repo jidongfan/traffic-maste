@@ -1,12 +1,17 @@
 package com.fjd.system.entity;
 
 
+import java.util.List;
+
 public class RoleEntity {
 
   private long rid;
   private String rname;
   private int rtype;
   private String rdesc;
+
+  //用户信息
+  private List<UserEntity> users;
 
 
   public long getRid() {
@@ -44,4 +49,11 @@ public class RoleEntity {
     this.rdesc = rdesc;
   }
 
+  public List<UserEntity> getUsers() {
+    return users;
+  }
+
+  public void setUsers(List<UserEntity> users) {
+    this.users = users;
+  }
 }

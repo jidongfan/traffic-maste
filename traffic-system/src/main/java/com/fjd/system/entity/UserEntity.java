@@ -1,6 +1,7 @@
 package com.fjd.system.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 前端传过来的实体类
@@ -31,6 +32,12 @@ public class UserEntity {
 
     //排序类型
     private String sortType = "ASC";
+
+    //角色编号；添加或者修改的时候，需要给用户指定角色信息 格式：1 2 3 4
+    private String rolesStr;
+
+    //给前台展示的角色信息
+    private List<RoleEntity> roles;
 
     public long getUid() {
         return uid;
@@ -157,6 +164,22 @@ public class UserEntity {
 
     public void setSortType(String sortType) {
         this.sortType = sortType;
+    }
+
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
+    }
+
+    public String getRolesStr() {
+        return rolesStr;
+    }
+
+    public void setRolesStr(String rolesStr) {
+        this.rolesStr = rolesStr;
     }
 
     @Override

@@ -2,17 +2,20 @@ package com.fjd.system.service.impl;
 
 import com.fjd.api.commons.SystemUtils;
 import com.fjd.system.entity.UserEntity;
+import com.fjd.system.info.RoleInfo;
 import com.fjd.system.info.UserInfo;
+import com.fjd.system.repository.RoleRepository;
 import com.fjd.system.repository.UserRepository;
 import com.fjd.system.service.UserService;
+import com.fjd.system.util.ConverUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -28,6 +31,8 @@ public class UserServiceImpl implements UserService {
     final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     /**
      * 添加用户
@@ -41,7 +46,23 @@ public class UserServiceImpl implements UserService {
         logger.info("system user service adduser start : " + userEntity);
         logger.info("system user service adduser userRepository start ");
         try{
-            user = userRepository.save(transform(userEntity));
+            UserInfo userInfo = ConverUtil.userEntityToUserInfo(userEntity);
+
+            //设定角色信息
+            if(!SystemUtils.isNullOrEmpty(userEntity.getRolesStr())){
+                String[] roleids = userEntity.getRolesStr().split(",");
+
+                List<RoleInfo> roleInfos = new ArrayList<>();
+                for(String ids : roleids){ //遍历角色的id
+                    if(null != roleRepository.findById(Long.parseLong(ids)).get()){
+                        roleInfos.add(roleRepository.findById(Long.parseLong(ids)).get());
+                    }
+                }
+                //设置关系；添加这个用户，它有哪些角色；把数据保存到第三方表
+                userInfo.setRoles(roleInfos);
+            }
+            user = userRepository.save(ConverUtil.userEntityToUserInfo(userEntity));
+
             logger.info("system user service adduser userRepository save end ");
             logger.info("user:" + user);
         }catch (Exception exception){
@@ -141,7 +162,7 @@ public class UserServiceImpl implements UserService {
 
         List<UserInfo> allInfo = userRepository.findAll();
 
-        return reversionList(allInfo);
+        return ConverUtil.userInfosToUserEntities(allInfo);
     }
 
 
@@ -153,7 +174,7 @@ public class UserServiceImpl implements UserService {
     public List<UserEntity> findAllUserByWhere(UserEntity userEntity){
 
         //将前端来的实体类转换成数据库用的实体类
-        UserInfo userInfo = transform(userEntity);
+        UserInfo userInfo = ConverUtil.userEntityToUserInfo(userEntity);
 
         //只能比字符串 不能比日期
         //匹配器
@@ -171,7 +192,7 @@ public class UserServiceImpl implements UserService {
 
         List<UserInfo> all = userRepository.findAll(example);
 
-        return reversionList(all);
+        return ConverUtil.userInfosToUserEntities(all);
     }
 
     /**
@@ -190,7 +211,7 @@ public class UserServiceImpl implements UserService {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        return reversionList(users);
+        return ConverUtil.userInfosToUserEntities(users);
     }
 
     /**
@@ -274,7 +295,7 @@ public class UserServiceImpl implements UserService {
 
         //通过页内容，构建数据
         Map<String, Object> map = new HashMap<>();
-        map.put("users", reversionList(content)); //查询到的列表信息
+        map.put("users", ConverUtil.userInfosToUserEntities(content)); //查询到的列表信息
         map.put("totalPage", page.getTotalPages()); //总页数
         map.put("currentPage", userEntity.getCurrentPage());
         map.put("pageSize", userEntity.getPageSize());
@@ -284,72 +305,5 @@ public class UserServiceImpl implements UserService {
     }
 
     
-    /**
-     * 将UserEntity 转换成 UserInfo
-     * @param userEntity
-     * @return UserInfo
-     */
 
-    //将userEntity 转换成 UserInfo
-    //私有的方法是给自己用的 没有必要做非空判断，自己控制
-    private UserInfo transform(UserEntity userEntity){
-
-        logger.info("system user service transform start : " + userEntity);
-
-        UserInfo userInfo = new UserInfo();
-
-        userInfo.setU1(userEntity.getU1());
-        userInfo.setUaccount(userEntity.getUaccount());
-        userInfo.setUpass(userEntity.getUpass());
-        userInfo.setUdesc(userEntity.getUdesc());
-        userInfo.setUid(userEntity.getUid());
-        userInfo.setUname(userEntity.getUname());
-        userInfo.setUphone(userEntity.getUphone());
-        userInfo.setUemail(userEntity.getUemail());
-
-        logger.info("system user service transform end : " + userInfo);
-        return userInfo;
-    }
-
-    /**
-     * 将UserInfo转为UserEntity
-     * @param userInfo
-     * @return UserEntity
-     */
-    private UserEntity reversion(UserInfo userInfo){
-
-        logger.info("system user service reversion start : " + userInfo);
-        
-        UserEntity userEntity = new UserEntity();
-        userEntity.setU1(userInfo.getU1());
-        //没有密码环节
-        //userEntity.setUpass(userInfo.getUpass());
-        userEntity.setUdesc(userInfo.getUdesc());
-        userEntity.setUaccount(userInfo.getUaccount());
-        userEntity.setUid(userInfo.getUid());
-        userEntity.setUemail(userInfo.getUemail());
-        userEntity.setUphone(userInfo.getUphone());
-        userEntity.setUname(userInfo.getUname());
-
-        logger.info("system user service reversion end : " + userEntity);
-        return userEntity;
-    }
-
-    /**
-     * 链表的转换
-     * @param userInfos
-     * @return Entities
-     */
-    private List<UserEntity> reversionList(List<UserInfo> userInfos){
-
-        logger.info("system user service reversionList start : " + userInfos);
-
-        List<UserEntity> userEntities = new ArrayList<>();
-        for (UserInfo userInfo : userInfos) {
-            userEntities.add(reversion(userInfo));
-        }
-        logger.info("system user service reversionList end : " + userEntities);
-
-        return userEntities;
-    }
 }

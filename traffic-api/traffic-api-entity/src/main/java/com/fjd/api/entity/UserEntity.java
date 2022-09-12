@@ -18,13 +18,11 @@ public class UserEntity {
   //和前端约定 1.时间戳 55211021  2.字符串日期 2000/02/02
   private String startTime;
   private String endTime;
-
   private int currentPage = 0; //当前页；JPA默认值是从0开始
-
   private int pageSize = 3; //每页记录数
-
   //假设做两个组合
   private String sort; //组合排序规则；utime，uaccount
+  private String sortType = "ASC";
 
 
 

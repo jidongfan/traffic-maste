@@ -2,6 +2,7 @@ package com.fjd.system.info;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 这里的entity是和前端页面交互的，info是和数据交互
@@ -34,6 +35,19 @@ public class UserInfo {
     //用于标注该条数据是否被删除
     @Column(name = "ustatus")
     private int ustatus;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "t_user_role",
+            joinColumns = {
+            //当前的实体类的名字，表字段的名称
+                @JoinColumn(name = "uid", referencedColumnName = "uid")
+            },
+            inverseJoinColumns = {
+            //目标的实体类 roleInfo
+                @JoinColumn(name = "rid", referencedColumnName = "rid")
+            }
+    )
+    private List<RoleInfo> roles;
 
 
     public long getUid() {
@@ -121,6 +135,14 @@ public class UserInfo {
 
     public void setUtime(Date utime) {
         this.utime = utime;
+    }
+
+    public List<RoleInfo> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleInfo> roles) {
+        this.roles = roles;
     }
 
     @Override
