@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/freight_user?serverTimezone=UTC
+    username: root
+    password: root
+
+server:
+  port: 8082
+
+#8080 BF383680B144DDA42B2473345D6197F7
+#8081 C07376A813F310966F77C07F5AAC36E
+#8083 C22F862CDA7FA674E809C409478B4477

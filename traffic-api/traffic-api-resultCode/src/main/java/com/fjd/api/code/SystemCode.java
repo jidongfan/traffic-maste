@@ -12,6 +12,14 @@ public interface SystemCode {
     String TRAFFIC_SYSTEM_ERROR = "000001";
 
     /**
+     * 一般code都是使用int类型
+     * C端 用户服务的错误码
+     * 13000 - 13999
+     */
+    int USER_WEB_ERROR_LOGIN_FAIL = 13001;
+    int USER_WEB_ERROR_LOGIN_SUCCESS = 13000;
+
+    /**
      * 错误 提示 警告
      */
     //用户管理 10000-10999
